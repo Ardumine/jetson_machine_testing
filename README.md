@@ -10,7 +10,7 @@
 ## About
 This project was inpired from my dad, wich he makes AI for choosing cork stoppers (I think thats how you say it), and i decided to make a project with a Jetson, so he seletcts the output of a machine. 
 
-In this case, the output of the machine will three different types of cans. Some of them werent done correclty and have a extra solder(I used pencils becuse i dont have a solder) on top atached to it and 3 of them were done correctly, with the solder being cut(see in [here](../CONTRIBUTING.md)). 
+In this case, the output of the machine will three different types of cans. Some of them werent done correclty and have a extra solder(I used pencils becuse i dont have a solder) on top atached to it and 3 of them were done correctly, with the solder being cut(see in [here](../images/jetson.png)). 
 
 Im now working a webserver so we can see what the Jetson is doing.
 
