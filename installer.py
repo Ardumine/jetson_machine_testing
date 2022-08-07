@@ -3,7 +3,7 @@ import shutil
 print("Please wait...")
 def create_dir (dir):
     try:
-        os.system("mkdir" + dir)
+        os.system("mkdir "  + dir)
     except:
         pass
 
