@@ -21,3 +21,5 @@ open("/home/nvidia/run_machine.sh", "w").write("sudo docker run --expose 8080  -
 
 os.system("touch /home/nvidia/jupiter.sh")
 open("/home/nvidia/jupiter.sh", "w").write("sudo docker run --expose 8080  --runtime nvidia -it --rm --network host     --volume ~/nvdli-data:/nvdli-nano/data     --device /dev/video0     nvcr.io/nvidia/dli/dli-nano-ai:v2.0.1-r32.6.1")
+os.system("chmod +x /home/nvidia/jupiter.sh")
+os.system("chmod +x /home/nvidia/run_machine.sh")
