@@ -1,9 +1,15 @@
 import os
 import shutil
 print("Please wait...")
-os.mkdir("~/nvdli-data")
-os.mkdir("~/nvdli-data/classification")
-os.mkdir("~/nvdli-data/classification/machine")
+def create_dir (dir):
+    try:
+        os.mkdir(dir)
+    except:
+        pass
+
+create_dir("~/nvdli-data")
+create_dir("~/nvdli-data/classification")
+create_dir("~/nvdli-data/classification/machine")
 
 files = os.listdir("src")
 for file in files:
