@@ -1,0 +1,70 @@
+<html>
+    <body>
+        JETSON CAN WIEWER
+        <br>
+        Current image:
+        <br>
+        <br>
+        <img id = "img_output"><br>
+        <br>
+        Detected:
+        <br>
+        <br>
+        <div id = "detected">
+        
+        </div>
+        <br>
+        <br>
+        Epoches:
+        <br>
+        <br>
+        <div id = "Epoches">
+        
+        </div>
+        <script type="text/javascript">
+            var img = document.getElementById('img_output');
+            var detected = document.getElementById('detected');
+            var Epoches = document.getElementById('Epoches');
+
+            var i = 0;
+            function1();
+            setInterval( function() {function1();}, 500);
+            var src = window.location.href + 'current_text' + i;
+            var src_retected =window.location.href +  'category/';
+            var src_Epoches =window.location.href +  'epochs/';
+            console.log(src_retected);
+            var image = new Image();
+            function function1() {
+                i++;
+                
+                fetch(src)
+                    .then(response => {
+                        return response.text(); 
+                    })
+                    .then(content => {
+                        image.src = 'data:image/png;base64,' + content;
+                        img.src = image.src;
+                    });
+                    
+                fetch(src_retected)
+                    .then(response => {
+                        return response.text(); 
+                    })
+                    .then(content => {
+                        detected.innerHTML = content;
+                    });
+                
+                fetch(src_Epoches)
+                    .then(response => {
+                        return response.text(); 
+                    })
+                    .then(content => {
+                        Epoches.innerHTML = content;
+                    });
+
+                
+
+            }
+        </script>
+    </body>
+</html>
