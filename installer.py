@@ -7,15 +7,17 @@ def create_dir (dir):
     except:
         pass
 
-create_dir("~/nvdli-data")
-create_dir("~/nvdli-data/classification")
-create_dir("~/nvdli-data/machine")
+create_dir("/home/nvidia/nvdli-data")
+create_dir("/home/nvidia/nvdli-data/classification")
+create_dir("/home/nvidia/nvdli-data/machine")
 
 files = os.listdir("src")
 for file in files:
-    print("cp src/" + file + " ~/nvdli-data/machine")
-    os.system("cp src/" + file + " ~/nvdli-data/machine")
+    print("cp src/" + file + " /home/nvidia/nvdli-data/machine")
+    os.system("cp src/" + file + " /home/nvidia/nvdli-data/machine")
 
-open("~/run_machine.sh", "w").write("sudo docker run --expose 8080  --runtime nvidia -it --rm --network host     --volume ~/nvdli-data:/nvdli-nano/data     --device /dev/video0     nvcr.io/nvidia/dli/dli-nano-ai:v2.0.1-r32.6.1 cd /nvdli-nano/data/machine/ && python3 main.py")
+os.system("touch /home/nvidia/run_machine.sh")
+open("/home/nvidia/run_machine.sh", "w").write("sudo docker run --expose 8080  --runtime nvidia -it --rm --network host     --volume ~/nvdli-data:/nvdli-nano/data     --device /dev/video0     nvcr.io/nvidia/dli/dli-nano-ai:v2.0.1-r32.6.1 cd /nvdli-nano/data/machine/ && python3 main.py")
 
-open("~/jupiter.sh", "w").write("sudo docker run --expose 8080  --runtime nvidia -it --rm --network host     --volume ~/nvdli-data:/nvdli-nano/data     --device /dev/video0     nvcr.io/nvidia/dli/dli-nano-ai:v2.0.1-r32.6.1")
+os.system("touch /home/nvidia/jupiter.sh")
+open("/home/nvidia/jupiter.sh", "w").write("sudo docker run --expose 8080  --runtime nvidia -it --rm --network host     --volume ~/nvdli-data:/nvdli-nano/data     --device /dev/video0     nvcr.io/nvidia/dli/dli-nano-ai:v2.0.1-r32.6.1")
