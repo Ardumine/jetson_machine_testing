@@ -16,14 +16,13 @@ I was going to use 3 cans, but Jetson crashes when trying to get him to learn. B
 
 
 ## Getting Started 
-To get sarted we just need the Jetson itself.
+To get sarted we just need the Jetson itself, with jetpack installed, with an ethernet connection, with a ssh session.
 
 ### Prerequisites
 
-What things you need to install the software and how to install them.
-
+Git: To install use:
 ```
-Give examples
+sudo apt install git
 ```
 
 
@@ -31,17 +30,25 @@ Give examples
 
 A step by step series of examples that tell you how to get a development env running.
 
-Say what the step will be
+Clone the repo: and cd to the directory
 
 ```
-Give the example
+git clone https://github.com/Ardumine/jetson_machine_testing/
+cd jetson_machine_testing
 ```
 
-And repeat
+Now install
 
 ```
-until finished
+python3 installer.py
+
+cd
+chmod +x run_machine.sh
+chmod +x jupiter.sh
 ```
+
+##Setting up:
+
 
 End with an example of getting some data out of the system or using it for a little demo.
 
