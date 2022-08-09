@@ -58,6 +58,7 @@ model_to_load = "/nvdli-nano/data/classification/my_model.pth" # here put the pa
 
 
 
+
 camera = USBCamera(width=224, height=224, capture_device=0) # confirm the capture_device number
 current_imagee = None
 
@@ -109,7 +110,6 @@ camera_widget = ipywidgets.Image()
 dataset_widget = ipywidgets.Dropdown(options=DATASETS, description='dataset')
 category_widget = ipywidgets.Dropdown(options=dataset.categories, description='category')
 count_widget = ipywidgets.IntText(description='count')
-save_widget = ipywidgets.Button(description='add')
 
 # manually update counts at initialization
 count_widget.value = dataset.get_count(category_widget.value)
@@ -131,10 +131,9 @@ def save(c):
     dataset.save_entry(camera.value, category_widget.value)
     #dataset.save_entry2(camera.value, category_widget.value,  dataset.get_count(category_widget.value) )
     count_widget.value = dataset.get_count(category_widget.value)
-save_widget.on_click(save)
 
 data_collection_widget = ipywidgets.VBox([
-    ipywidgets.HBox([camera_widget]), dataset_widget, category_widget, count_widget, save_widget
+    ipywidgets.HBox([camera_widget]), dataset_widget, category_widget, count_widget
 ])
 
 # display(data_collection_widget)
@@ -162,7 +161,6 @@ model.fc = torch.nn.Linear(512, len(dataset.categories))
 model = model.to(device)
 
 model_save_button = ipywidgets.Button(description='save model')
-model_load_button = ipywidgets.Button(description='load model')
 model_path_widget = ipywidgets.Text(description='model path', value='/nvdli-nano/data/classification/my_model5.pth')
 
 def load_model(c):
@@ -171,7 +169,6 @@ def load_model(c):
     model.load_state_dict(torch.load(model_path_widget.value))
     print("Load_model!")
 
-model_load_button.on_click(load_model)
     
 def save_model(c):
     torch.save(model.state_dict(), model_path_widget.value)
@@ -179,7 +176,7 @@ model_save_button.on_click(save_model)
 
 model_widget = ipywidgets.VBox([
     model_path_widget,
-    ipywidgets.HBox([model_load_button, model_save_button])
+    ipywidgets.HBox([model_save_button])
 ])
 
 
@@ -224,14 +221,12 @@ optimizer = torch.optim.Adam(model.parameters())
 # optimizer = torch.optim.SGD(model.parameters(), lr=1e-3, momentum=0.9)
 
 epochs_widget = ipywidgets.IntText(description='epochs', value=epochs_to_train)
-eval_button = ipywidgets.Button(description='evaluate')
-train_button = ipywidgets.Button(description='train')
 loss_widget = ipywidgets.FloatText(description='loss')
 accuracy_widget = ipywidgets.FloatText(description='accuracy')
 progress_widget = ipywidgets.FloatProgress(min=0.0, max=1.0, description='progress')
 
 def train_eval(is_training):
-    global BATCH_SIZE, LEARNING_RATE, MOMENTUM, model, dataset, optimizer, eval_button, train_button, accuracy_widget, loss_widget, progress_widget, state_widget
+    global BATCH_SIZE, LEARNING_RATE, MOMENTUM, model, dataset, optimizer, accuracy_widget, loss_widget, progress_widget, state_widget
     
     try:
         train_loader = torch.utils.data.DataLoader(
@@ -241,8 +236,6 @@ def train_eval(is_training):
         )
 
         state_widget.value = 'stop'
-        train_button.disabled = True
-        eval_button.disabled = True
         time.sleep(1)
 
         if is_training:
@@ -291,20 +284,19 @@ def train_eval(is_training):
     except :
         pass
     model = model.eval()
-
-    train_button.disabled = False
-    eval_button.disabled = False
+    
+    progress_widget.value = 0
+    loss_widget.value = 0
+    accuracy_widget.value = 0
     state_widget.value = 'live'
     
-train_button.on_click(lambda c: train_eval(is_training=True))
-eval_button.on_click(lambda c: train_eval(is_training=False))
+    
     
 train_eval_widget = ipywidgets.VBox([
     epochs_widget,
     progress_widget,
     loss_widget,
-    accuracy_widget,
-    ipywidgets.HBox([train_button, eval_button])
+    accuracy_widget
 ])
 
 # display(train_eval_widget)
@@ -373,7 +365,7 @@ class WEB_SERVER(threading.Thread):
     def run(self,*args,**kwargs):
         global IP_address
         with HTTPServer(('', 8080), handler) as server:
-            print("Web server started! http://[YOUR JETSON IP]:8080/")
+            print("Web server started! http://jetson:8080/")
             server.serve_forever()
 t = WEB_SERVER()
 t.start()
