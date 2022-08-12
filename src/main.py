@@ -40,20 +40,20 @@ print("LIB INI DONE")
 
 
 
-
 ###################CONFIG
 
 load_model_from_file = False # if activated, the program will load the model from the selected file in the model_to_load. If not activated, the program will learn from source.
 #############LEARN FROM SCRATCH ON START CONFIG
 
-TASK = 'cans_2' #Here put your folder name in classification, without the _A
-epochs_to_train = 4
+TASK = 'cans_3' #Here put your folder name in classification, without the _A
+epochs_to_train = 3
 
 
 #############LOAD MODEL ON START CONFIG
 CATEGORIES = [ '7_up_broken', '7_up_ok', 'icetea_broken', 'icetea_ok'] #our catagories, that our ai will identify 
 
-model_to_load = "/nvdli-nano/data/classification/my_model.pth" # here put the path of your model. Make sure its of the docker conatiner.
+model_to_load = "/nvdli-nano/data/classification/my_model5.pth" # here put the path of your model. Make sure its of the docker conatiner.
+
 
 
 
