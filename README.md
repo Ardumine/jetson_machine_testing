@@ -118,5 +118,3 @@ model_to_load = "/nvdli-nano/data/classification/my_model5.pth" # here put the p
 ./run_machine.sh
 ```
 
-# INFO!
-
