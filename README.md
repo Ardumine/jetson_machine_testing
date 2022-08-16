@@ -26,9 +26,8 @@ sudo apt install git
 ```
 
 
-### Installing
+## Installing
 
-A step by step series of examples that tell you how to get a development env running.
 
 Clone the repo: and cd to the directory
 
@@ -36,9 +35,7 @@ Clone the repo: and cd to the directory
 git clone https://github.com/Ardumine/jetson_machine_testing/
 cd jetson_machine_testing
 ```
-
-Now install
-
+Now run the installer
 ```
 python3 installer.py
 
@@ -47,11 +44,79 @@ chmod +x run_machine.sh
 chmod +x jupiter.sh
 ```
 
-##Setting up:
+## Setting up the software
+There are two modes to use models: 
+* The learn on start 
+* Load model on start
+
+### To use the learn on start
+First copy the data to this dir:
+```
+~/nvdli-data/classification/
+```
+The data you should have in that folder should be like [this](data_trained/images/).
+
+Edit the code file:
+```
+nano ~/nvdli-data/machine/main.py
+```
 
 
-End with an example of getting some data out of the system or using it for a little demo.
+Now go to this line:
+```
+###################CONFIG
+```
+Here is the config of the program. 
+Change this line:
+```
+load_model_from_file = False
+```
+Now change cans_3 with your model name.
+You can set epochs_to_train to more, but it will take much longer
+```
+#############LEARN FROM SCRATCH ON START CONFIG
 
-## Usage
+TASK = 'cans_3' #Here put your folder name in classification, without the _A
+epochs_to_train = 3 
+```
 
-Add notes about how to use the system.
+### To use the load model on start
+First copy the model to this dir:
+```
+~/nvdli-data/classification/
+```
+The model you should have in that folder should be like [this](data_trained/model/).
+
+Edit the code file:
+```
+nano ~/nvdli-data/machine/main.py
+```
+
+
+Now go to this line:
+```
+###################CONFIG
+```
+Here is the config of the program. 
+Change this line:
+```
+load_model_from_file = True
+```
+Now change model_to_load end to the model name. Dont forget to change the CATEGORIES to your categories.
+
+```
+#############LOAD MODEL ON START CONFIG
+CATEGORIES = [ '7_up_broken', '7_up_ok', 'icetea_broken', 'icetea_ok'] #our catagories, that our ai will identify 
+
+model_to_load = "/nvdli-nano/data/classification/my_model5.pth" # here put the path of your model. Make sure its of the docker conatiner.
+```
+
+
+
+## Running
+```
+./run_machine.sh
+```
+
+# INFO!
+
